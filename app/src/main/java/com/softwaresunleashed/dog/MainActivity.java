@@ -1,5 +1,6 @@
 package com.softwaresunleashed.dog;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.softwaresunleashed.dog.Settings.SettingsActivity;
 import com.softwaresunleashed.dog.debugregs.ESR_DebugRegisters;
 
 import java.io.IOException;
@@ -26,7 +28,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv_description = (TextView) findViewById(R.id.tv_description);
+        et_register_val = (EditText) findViewById(R.id.et_register_val);
 
+
+        ((Button) findViewById(R.id.btnSelectNPI)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ((Button) findViewById(R.id.btnDescribeMe)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        et_register_val = (EditText) findViewById(R.id.et_register_val);
+
+
 
     }
 

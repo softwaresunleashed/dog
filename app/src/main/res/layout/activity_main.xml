@@ -22,12 +22,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnSelectNPI"
             android:text=" Select NPI "/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnDescribeMe"
             android:text=" Describe Me "/>
-
     </android.support.v7.widget.LinearLayoutCompat>
 
         <android.support.v7.widget.LinearLayoutCompat
