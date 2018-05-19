@@ -85,16 +85,37 @@ public class MainActivity extends AppCompatActivity {
 
         // Get Detail ID of the Register
         c = myDbHelper.query(DatabaseHelper.DB_TABLE_REGISTERS, null, whereClause, whereArgs, null, null, null);
+        String displayText = "";
+        tv_description.setText(displayText);
         if (c.moveToFirst()) {
             do {
-                tv_description.setText(tv_description.getText().toString() + c.getString(TableDefinitions.REGISTERS_DETAILID) + "\n");
 
-//                //tv_description.setText(tv_description.getText().toString() + "_id: " + c.getString(0) + "\n" +
-//                        "DATE: " + c.getString(1) + "\n" +
-//                        "TIME: " + c.getString(2) + "\n" +
-//                        "HEIGHT:  " + c.getString(3) + "\n");
+                displayText = tv_description.getText().toString() + "\n";
 
+                // Print Register Name
+                displayText += "RegName : " + c.getString(TableDefinitions.REGISTERS_NAME) + "\n";
+
+                // Print Register Detail ID
+                String detailId =  c.getString(TableDefinitions.REGISTERS_DETAILID);
+                displayText += "RegDetailId : " + detailId + "\n";
+
+
+                // Get Description of each Register
+                // Apply where clause
+                String whereClause_regdetail = "" + TableDefinitions.REGDETAILS_DETAILID_STR + "=?";
+                String[] whereArgs_regdetail = new String[] {
+                        detailId
+                };
+                Cursor c_desc = myDbHelper.query(DatabaseHelper.DB_TABLE_REGDETAILS, null, whereClause_regdetail, whereArgs_regdetail, null, null, null);
+                if (c_desc.moveToFirst()) {
+                    do {
+                        displayText += c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n";
+                    } while (c_desc.moveToNext());
+                }
             } while (c.moveToNext());
+
+            tv_description.setText(displayText);
+
         }
     }
 
