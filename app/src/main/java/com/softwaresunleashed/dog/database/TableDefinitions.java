@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog;
+package com.softwaresunleashed.dog.database;
 
 public class TableDefinitions {
 

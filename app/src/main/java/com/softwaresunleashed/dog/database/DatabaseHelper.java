@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog;
+package com.softwaresunleashed.dog.database;
 
 import android.content.Context;
 import android.database.Cursor;
