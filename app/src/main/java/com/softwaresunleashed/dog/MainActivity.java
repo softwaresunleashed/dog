@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         if (c.moveToFirst()) {
             do {
 
-                displayText = tv_description.getText().toString() + "\n";
+                displayText += tv_description.getText().toString() + "\n";
 
                 // Print Register Name
                 displayText += "RegName : " + c.getString(TableDefinitions.REGISTERS_NAME) + "\n";
