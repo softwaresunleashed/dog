@@ -18,7 +18,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     String DB_PATH = null;
     public static String DB_NAME = "LS1046A.sqlite";
-    public static String DB_TABLE_NAME = "Registers";
+    public static String DB_TABLE_REGISTERS = "Registers";
+    public static String DB_TABLE_REGDETAILS = "RegDetails";
+
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
@@ -101,7 +103,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
-        return myDataBase.query(DB_TABLE_NAME, null, null, null, null, null, null);
+        //return myDataBase.query(DB_TABLE_REGISTERS, null, null, null, null, null, null);
+        return myDataBase.query(table, columns, selection, selectionArgs, groupBy, having, orderBy);
     }
 
 
