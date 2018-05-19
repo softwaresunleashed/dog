@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         tv_description = (TextView) findViewById(R.id.tv_description);
 
 
-        ((Button) findViewById(R.id.button01)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.btnDescribeMe)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fetchRegisterDetailsFromAddress(et_register_val.getText().toString());
@@ -87,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
         c = myDbHelper.query(DatabaseHelper.DB_TABLE_REGISTERS, null, whereClause, whereArgs, null, null, null);
         String displayText = "";
         tv_description.setText(displayText);
-        if (c.moveToFirst()) {
+        if(c.getCount() == 0){
+            displayText = "Undefined / UnMapped Register Address";
+        }
+        else if (c.moveToFirst()) {
             do {
 
                 displayText += tv_description.getText().toString() + "\n";
@@ -113,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
                     } while (c_desc.moveToNext());
                 }
             } while (c.moveToNext());
-
-            tv_description.setText(displayText);
-
         }
+
+        tv_description.setText(displayText);
+
     }
 
 
