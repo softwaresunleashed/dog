@@ -20,11 +20,11 @@ public class Preferences {
             return null;
     }
 
-    public static void setCurrentNPIDB(Context context, String key, String value) {
+    public static void setCurrentNPIDB(Context context, String value) {
         if (context != null) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-            sharedPreferencesEditor.putString(key, value);
+            sharedPreferencesEditor.putString(SHARED_PREF_CURRENT_NPI_DB, value);
             sharedPreferencesEditor.apply();
         }
     }

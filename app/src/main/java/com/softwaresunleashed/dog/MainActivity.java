@@ -32,17 +32,12 @@ public class MainActivity extends AppCompatActivity {
         et_register_val = (EditText) findViewById(R.id.et_register_val);
 
 
+        is_npi_db_set();
+
         ((Button) findViewById(R.id.btnSelectNPI)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String current_db = Preferences.getCurrentNPIDB(MainActivity.this);
-//                if(current_db.isEmpty()){
-//                    Intent intent = new Intent(MainActivity.this, NPISelelctionActivity.class);
-//                    startActivity(intent);
-//                }
-
-                Intent intent = new Intent(MainActivity.this, NPISelelctionActivity.class);
-                startActivity(intent);
+                pop_up_npi_selection_activity();
             }
         });
 
@@ -53,9 +48,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
 
+    private void is_npi_db_set() {
+        String current_npi_db = Preferences.getCurrentNPIDB(getApplicationContext());
+        if(current_npi_db == null || current_npi_db.isEmpty()){
+            // No DB Set, display NPI DB Selection Activity
+            pop_up_npi_selection_activity();
+        } else {
+            // DB is set, set the global DB pointer to this current DB
+            DatabaseHelper.DB_NAME = current_npi_db;
+        }
+    }
 
+    private void pop_up_npi_selection_activity(){
+        Intent intent = new Intent(MainActivity.this, NPISelelctionActivity.class);
+        startActivity(intent);
     }
 
     private void process_value(CharSequence s) {

@@ -17,7 +17,7 @@ import java.io.OutputStream;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     String DB_PATH = null;
-    public static String DB_NAME = "LS1046A.sqlite";
+    public static String DB_NAME = "";  // This should be set by NPI DB selection activity (*.sqlite)
     public static String DB_TABLE_REGISTERS = "Registers";
     public static String DB_TABLE_REGDETAILS = "RegDetails";
 
