@@ -3,9 +3,12 @@ package com.softwaresunleashed.dog.activities;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.database.TableDefinitions;
 import com.softwaresunleashed.dog.debugregs.ESR_DebugRegisters;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     EditText et_register_val;
     TextView tv_description;
     Cursor c = null;
+    int RC_FILE_OPEN_DIALOG = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +55,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        ((Button) findViewById(R.id.btnOpenDump)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent()
+                        .setType("*/*")
+                        .setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(intent, "Select Dump File..."), RC_FILE_OPEN_DIALOG);
+            }
+        });
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==RC_FILE_OPEN_DIALOG && resultCode==RESULT_OK) {
+            Uri selectedfile = data.getData(); //The uri with the location of the file
+            File fileFromUri = new File(selectedfile.getPath());
+            Preferences.setCurrentDumpFile(getApplicationContext(), fileFromUri.getAbsolutePath());
+        }
+    }
 
     private void is_npi_db_set() {
         String current_npi_db = Preferences.getCurrentNPIDB(getApplicationContext());
