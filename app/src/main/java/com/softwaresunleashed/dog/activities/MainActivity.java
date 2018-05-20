@@ -65,18 +65,10 @@ public class MainActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.btnOpenDump)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Intent intent = new Intent()
-//                        .setType("*/*")
-//                        .setAction(Intent.ACTION_GET_CONTENT);
-//
-//                startActivityForResult(Intent.createChooser(intent, "Select Dump File..."), RC_FILE_OPEN_DIALOG);
-
                 Intent i2 = new Intent(getApplicationContext(), FileChooser.class);
                 i2.putExtra(Constants.SELECTION_MODE,Constants.SELECTION_MODES.SINGLE_SELECTION.ordinal());
                 i2.putExtra(Constants.ALLOWED_FILE_EXTENSIONS, "txt");
                 startActivityForResult(i2,RC_FILE_OPEN_DIALOG);
-
             }
         });
 
@@ -106,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
                 String line;
 
                 while (( line = bufferedReader.readLine()) != null) {
-                    // do what you want with the line
+                    parse_each_line(line);
                 }
             }
             inputStream.close(); //close the file
         } catch (java.io.FileNotFoundException e) {
-            //file doesnt exist
+            //file doesn't exist
             e.printStackTrace();
         } catch (java.io.IOException e) {
             //file IO exception
@@ -119,6 +111,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void parse_each_line(String line) {
+        String split_array[]= line.split(",", 2);
+        String register_address = split_array[0];
+        String register_value = split_array[1];
+
+        fetchRegisterDetailsFromAddress(register_address);
     }
 
     private void is_npi_db_set() {
@@ -158,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
     private void fetchRegisterDetailsFromAddress(String regAddress){
         if(regAddress.isEmpty())
             return;
+
+        if(regAddress.startsWith("0x"))
+            regAddress = regAddress.substring(2);       // Skipping "0x" of the hexadecimal address
 
         // Convert Hex Value to Long
         Long lngRegAddress = HexToLong(regAddress);

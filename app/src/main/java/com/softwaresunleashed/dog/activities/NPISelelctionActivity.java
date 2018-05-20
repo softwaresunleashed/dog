@@ -45,6 +45,9 @@ public class NPISelelctionActivity extends AppCompatActivity {
                 Preferences.setCurrentNPIDB(getApplicationContext(), npi_db_item.NPI_DB_Name);
                 DatabaseHelper.DB_NAME = npi_db_item.NPI_DB_Name;
                 Toast.makeText(getApplicationContext(), npi_db_item.getNPIDisplayName() + " is selected as current NPI DB.", Toast.LENGTH_LONG).show();
+
+                // Close Activity
+                finish();
             }
 
             @Override
