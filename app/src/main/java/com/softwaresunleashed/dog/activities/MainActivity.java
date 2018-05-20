@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,13 +18,14 @@ import com.softwaresunleashed.dog.Preferences;
 import com.softwaresunleashed.dog.R;
 import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.database.TableDefinitions;
-import com.softwaresunleashed.dog.debugregs.ESR_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.ESR_EL1_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.RegFacade;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.btnDescribeMe)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchRegisterDetailsFromAddress(et_register_val.getText().toString());
+                fetchRegisterDetailsFromAddress(et_register_val.getText().toString(), "0");
             }
         });
 
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         String register_address = split_array[0];
         String register_value = split_array[1];
 
-        fetchRegisterDetailsFromAddress(register_address);
+        fetchRegisterDetailsFromAddress(register_address, register_value);
     }
 
     private void is_npi_db_set() {
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     private void process_value(CharSequence s) {
         Long bit_pattern = HexToLong(s.toString());
         tv_description.setText(tv_description.getText().toString()
-                        + new ESR_DebugRegisters().populate_description_view(bit_pattern.toString()));
+                        + new ESR_EL1_DebugRegisters().populate_description_view(bit_pattern.toString()));
 
     }
 
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         return lngHexVal;
     }
 
-    private void fetchRegisterDetailsFromAddress(String regAddress){
+    private void fetchRegisterDetailsFromAddress(String regAddress, String regValue){
         if(regAddress.isEmpty())
             return;
 
@@ -186,41 +185,45 @@ public class MainActivity extends AppCompatActivity {
 
         // Get Detail ID of the Register
         c = myDbHelper.query(DatabaseHelper.DB_TABLE_REGISTERS, null, whereClause, whereArgs, null, null, null);
-        String displayText = "";
-        tv_description.setText(displayText);
+        String displayText = tv_description.getText().toString();
+        //tv_description.setText(displayText);
         if(c.getCount() == 0){
-            displayText = "Undefined / UnMapped Register Address";
+            displayText += "Undefined / UnMapped Register Address : " + "0x" + regAddress + "\n";
         }
         else if (c.moveToFirst()) {
             do {
-
                 displayText += tv_description.getText().toString() + "\n";
 
                 // Print Register Name
                 displayText += "RegName : " + c.getString(TableDefinitions.REGISTERS_NAME) + "\n";
 
                 // Print Register Detail ID
-                String detailId =  c.getString(TableDefinitions.REGISTERS_DETAILID);
-                displayText += "RegDetailId : " + detailId + "\n";
+                String detailId = c.getString(TableDefinitions.REGISTERS_DETAILID);
+                if (detailId == null || detailId.isEmpty()) {
+                    // No Detail present. Go to Debug Register Implementation
+                    DebugRegisters debugRegisters = RegFacade.getRegisterInstance(lngRegAddress.toString());
 
+                    // Call respective register's populate description routine
+                    displayText += debugRegisters.populate_description_view(regValue);
+                } else {
+                    displayText += "RegDetailId : " + detailId + "\n";
 
-                // Get Description of each Register
-                // Apply where clause
-                String whereClause_regdetail = "" + TableDefinitions.REGDETAILS_DETAILID_STR + "=?";
-                String[] whereArgs_regdetail = new String[] {
-                        detailId
-                };
-                Cursor c_desc = myDbHelper.query(DatabaseHelper.DB_TABLE_REGDETAILS, null, whereClause_regdetail, whereArgs_regdetail, null, null, null);
-                if (c_desc.moveToFirst()) {
-                    do {
-                        displayText += c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n";
-                    } while (c_desc.moveToNext());
+                    // Get Description of each Register
+                    // Apply where clause
+                    String whereClause_regdetail = "" + TableDefinitions.REGDETAILS_DETAILID_STR + "=?";
+                    String[] whereArgs_regdetail = new String[]{
+                            detailId
+                    };
+                    Cursor c_desc = myDbHelper.query(DatabaseHelper.DB_TABLE_REGDETAILS, null, whereClause_regdetail, whereArgs_regdetail, null, null, null);
+                    if (c_desc.moveToFirst()) {
+                        do {
+                            displayText += c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n";
+                        } while (c_desc.moveToNext());
+                    }
                 }
             } while (c.moveToNext());
         }
-
         tv_description.setText(displayText);
-
     }
 
 
