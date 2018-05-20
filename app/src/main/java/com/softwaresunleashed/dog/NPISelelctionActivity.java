@@ -6,9 +6,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.softwaresunleashed.dog.database.NPISelectionDatabaseDetails;
 import com.softwaresunleashed.dog.recyclerview.NPISelectionAdapter;
+import com.softwaresunleashed.dog.recyclerview.RecyclerTouchListener;
 
 
 public class NPISelelctionActivity extends AppCompatActivity {
@@ -28,8 +31,26 @@ public class NPISelelctionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(mAdapter);
 
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                NPISelectionDatabaseDetails npi_db_item = NPISelectionDatabaseDetails.db_details.get(position);
+
+                // Store the selected DB Entry
+                Preferences.setCurrentNPIDB(getApplicationContext(), Preferences.SHARED_PREF_CURRENT_NPI_DB, npi_db_item.NPI_DB_Name);
+                Toast.makeText(getApplicationContext(), npi_db_item.getNPIDisplayName() + " is selected as current NPI DB.", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+
+        recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
