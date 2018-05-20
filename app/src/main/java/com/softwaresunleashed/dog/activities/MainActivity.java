@@ -14,14 +14,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aditya.filebrowser.Constants;
+import com.aditya.filebrowser.FileChooser;
 import com.softwaresunleashed.dog.Preferences;
 import com.softwaresunleashed.dog.R;
 import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.database.TableDefinitions;
 import com.softwaresunleashed.dog.debugregs.ESR_DebugRegisters;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,11 +66,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent()
-                        .setType("*/*")
-                        .setAction(Intent.ACTION_GET_CONTENT);
+//                Intent intent = new Intent()
+//                        .setType("*/*")
+//                        .setAction(Intent.ACTION_GET_CONTENT);
+//
+//                startActivityForResult(Intent.createChooser(intent, "Select Dump File..."), RC_FILE_OPEN_DIALOG);
 
-                startActivityForResult(Intent.createChooser(intent, "Select Dump File..."), RC_FILE_OPEN_DIALOG);
+                Intent i2 = new Intent(getApplicationContext(), FileChooser.class);
+                i2.putExtra(Constants.SELECTION_MODE,Constants.SELECTION_MODES.SINGLE_SELECTION.ordinal());
+                i2.putExtra(Constants.ALLOWED_FILE_EXTENSIONS, "txt");
+                startActivityForResult(i2,RC_FILE_OPEN_DIALOG);
+
             }
         });
 
@@ -77,6 +89,35 @@ public class MainActivity extends AppCompatActivity {
             Uri selectedfile = data.getData(); //The uri with the location of the file
             File fileFromUri = new File(selectedfile.getPath());
             Preferences.setCurrentDumpFile(getApplicationContext(), fileFromUri.getAbsolutePath());
+            parse_dump_file(fileFromUri.getAbsolutePath());
+        }
+    }
+
+    private void parse_dump_file(String absolutePath) {
+        try {
+            File file = new File(absolutePath);
+            FileInputStream inputStream = new FileInputStream(file);
+
+
+            if (inputStream != null) {
+                InputStreamReader streamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(streamReader);
+
+                String line;
+
+                while (( line = bufferedReader.readLine()) != null) {
+                    // do what you want with the line
+                }
+            }
+            inputStream.close(); //close the file
+        } catch (java.io.FileNotFoundException e) {
+            //file doesnt exist
+            e.printStackTrace();
+        } catch (java.io.IOException e) {
+            //file IO exception
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 

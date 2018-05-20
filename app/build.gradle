@@ -18,6 +18,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.0.2'
@@ -27,4 +33,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     // RecyclerView
     implementation 'com.android.support:recyclerview-v7:27.0.2'
+
+
+    // File Chooser Dialog
+    implementation 'com.github.adityak368:Android-FileBrowser-FilePicker:1.7'
 }
