@@ -11,7 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.softwaresunleashed.dog.Settings.SettingsActivity;
+import com.softwaresunleashed.dog.database.DatabaseHelper;
+import com.softwaresunleashed.dog.database.TableDefinitions;
 import com.softwaresunleashed.dog.debugregs.ESR_DebugRegisters;
 
 import java.io.IOException;
@@ -34,7 +35,13 @@ public class MainActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.btnSelectNPI)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+//                String current_db = Preferences.getCurrentNPIDB(MainActivity.this);
+//                if(current_db.isEmpty()){
+//                    Intent intent = new Intent(MainActivity.this, NPISelelctionActivity.class);
+//                    startActivity(intent);
+//                }
+
+                Intent intent = new Intent(MainActivity.this, NPISelelctionActivity.class);
                 startActivity(intent);
             }
         });
