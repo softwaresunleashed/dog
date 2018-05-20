@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog;
+package com.softwaresunleashed.dog.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.softwaresunleashed.dog.Preferences;
+import com.softwaresunleashed.dog.R;
 import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.database.NPISelectionDatabaseDetails;
 import com.softwaresunleashed.dog.recyclerview.NPISelectionAdapter;
