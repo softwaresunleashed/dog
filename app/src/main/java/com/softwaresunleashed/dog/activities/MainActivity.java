@@ -136,13 +136,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void process_value(CharSequence s) {
-        Long bit_pattern = HexToLong(s.toString());
-        tv_description.setText(tv_description.getText().toString()
-                        + new ESR_EL1_DebugRegisters().populate_description_view(bit_pattern.toString()));
-
-    }
-
     private Long HexToLong(String Hex) {
         Long lngHexVal = new Long(-1);
         try{
@@ -202,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
                 if (detailId == null || detailId.isEmpty()) {
                     // No Detail present. Go to Debug Register Implementation
                     DebugRegisters debugRegisters = RegFacade.getRegisterInstance(lngRegAddress.toString());
-
                     // Call respective register's populate description routine
                     displayText += debugRegisters.populate_description_view(regValue);
                 } else {
