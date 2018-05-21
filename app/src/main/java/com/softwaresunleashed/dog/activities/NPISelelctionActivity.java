@@ -13,8 +13,8 @@ import com.softwaresunleashed.dog.Preferences;
 import com.softwaresunleashed.dog.R;
 import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.database.NPISelectionDatabaseDetails;
-import com.softwaresunleashed.dog.recyclerview.NPISelectionAdapter;
-import com.softwaresunleashed.dog.recyclerview.RecyclerTouchListener;
+import com.softwaresunleashed.dog.recyclerview_npiselector.NPISelectionAdapter;
+import com.softwaresunleashed.dog.recyclerview_npiselector.RecyclerTouchListener;
 
 
 public class NPISelelctionActivity extends AppCompatActivity {

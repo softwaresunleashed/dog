@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog.recyclerview;
+package com.softwaresunleashed.dog.recyclerview_npiselector;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;

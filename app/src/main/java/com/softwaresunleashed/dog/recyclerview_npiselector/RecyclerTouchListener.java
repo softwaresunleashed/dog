@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog.recyclerview;
+package com.softwaresunleashed.dog.recyclerview_npiselector;
 
 
 import android.content.Context;
