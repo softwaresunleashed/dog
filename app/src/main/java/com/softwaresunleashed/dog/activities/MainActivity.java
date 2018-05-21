@@ -6,6 +6,8 @@ import android.database.SQLException;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,19 +16,24 @@ import android.widget.Toast;
 
 import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
+import com.softwaresunleashed.dog.ExpandableRecyclerAdapter;
 import com.softwaresunleashed.dog.Preferences;
 import com.softwaresunleashed.dog.R;
+import com.softwaresunleashed.dog.RegisterDetailsHolder;
 import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.database.TableDefinitions;
 import com.softwaresunleashed.dog.debugregs.DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.ESR_EL1_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.RegFacade;
+import com.softwaresunleashed.dog.debugregs.Undefined_DebugRegisters;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_description;
     Cursor c = null;
     int RC_FILE_OPEN_DIALOG = 123;
+
+    private RecyclerView recyclerView;
+    private List<RegisterDetailsHolder> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         tv_description = (TextView) findViewById(R.id.tv_description);
         et_register_val = (EditText) findViewById(R.id.et_register_val);
 
+        data = new ArrayList<RegisterDetailsHolder>();
 
         is_npi_db_set();
 
@@ -154,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
         if(regAddress.startsWith("0x"))
             regAddress = regAddress.substring(2);       // Skipping "0x" of the hexadecimal address
 
+        RegisterDetailsHolder registerDetailsHolder = new RegisterDetailsHolder();
+        registerDetailsHolder.setRegisterValue("0x" + regAddress);
+
         // Convert Hex Value to Long
         Long lngRegAddress = HexToLong(regAddress);
 
@@ -182,13 +196,15 @@ public class MainActivity extends AppCompatActivity {
         //tv_description.setText(displayText);
         if(c.getCount() == 0){
             displayText += "Undefined / UnMapped Register Address : " + "0x" + regAddress + "\n";
+            registerDetailsHolder.setRegisterName((new Undefined_DebugRegisters()).populate_regname_view());
         }
         else if (c.moveToFirst()) {
             do {
                 displayText += tv_description.getText().toString() + "\n";
 
                 // Print Register Name
-                displayText += "RegName : " + c.getString(TableDefinitions.REGISTERS_NAME) + "\n";
+                String regName = c.getString(TableDefinitions.REGISTERS_NAME);
+                displayText += "RegName : " + regName + "\n";
 
                 // Print Register Detail ID
                 String detailId = c.getString(TableDefinitions.REGISTERS_DETAILID);
@@ -197,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
                     DebugRegisters debugRegisters = RegFacade.getRegisterInstance(lngRegAddress.toString());
                     // Call respective register's populate description routine
                     displayText += debugRegisters.populate_description_view(regValue);
+                    registerDetailsHolder.setRegisterDescription(debugRegisters.populate_description_view(regValue));
+                    registerDetailsHolder.setRegisterName(debugRegisters.populate_regname_view());
                 } else {
                     displayText += "RegDetailId : " + detailId + "\n";
 
@@ -210,13 +228,28 @@ public class MainActivity extends AppCompatActivity {
                     if (c_desc.moveToFirst()) {
                         do {
                             displayText += c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n";
+                            registerDetailsHolder.setRegisterDescription(c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n");
+                            registerDetailsHolder.setRegisterName(regName);
                         } while (c_desc.moveToNext());
                     }
                 }
+                data.add(registerDetailsHolder);
             } while (c.moveToNext());
         }
         tv_description.setText(displayText);
+
+        populate_recycler_view();
     }
 
+    void populate_recycler_view(){
+        
+        recyclerView = (RecyclerView)findViewById(R.id.recycler_view_register_description);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        //fetch data and on ExpandableRecyclerAdapter
+        recyclerView.setAdapter(new ExpandableRecyclerAdapter(data));
+    }
 
 }

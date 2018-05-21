@@ -2,6 +2,8 @@ package com.softwaresunleashed.dog.debugregs;
 
 public class CPSR_DebugRegisters extends DebugRegisters {
 
+    private String regName = "CPSR";
+
     private String regDesc = "[31]\tN\t\n" +
             "Overflow flag:\n" +
             "\n" +
@@ -71,11 +73,17 @@ public class CPSR_DebugRegisters extends DebugRegisters {
 
     public CPSR_DebugRegisters() {
         setRegister_description(regDesc);
+        setRegister_name(regName);
     }
 
     @Override
     public String populate_description_view(String value) {
         String display = "CPSR : " + value + "\n" + getRegister_description();
         return display;
+    }
+
+    @Override
+    public String populate_regname_view() {
+        return getRegister_name();
     }
 }

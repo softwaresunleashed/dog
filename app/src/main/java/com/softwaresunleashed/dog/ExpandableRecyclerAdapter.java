@@ -1,26 +1,29 @@
 package com.softwaresunleashed.dog;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRecyclerAdapter.ViewHolder> {
 
-    private List<Repo> repos;
+    private List<RegisterDetailsHolder> registerList;
     private SparseBooleanArray expandState = new SparseBooleanArray();
     private Context context;
 
-    public ExpandableRecyclerAdapter(List<Repo> repos) {
-        this.repos = repos;
+    public ExpandableRecyclerAdapter(List<RegisterDetailsHolder> registerList) {
+        this.registerList = registerList;
         //set initial expanded state to false
-        for (int i = 0; i < repos.size(); i++) {
+        for (int i = 0; i < registerList.size(); i++) {
             expandState.append(i, false);
         }
     }
@@ -37,12 +40,10 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
 
         viewHolder.setIsRecyclable(false);
 
-        viewHolder.tvName.setText(repos.get(i).getName());
+        viewHolder.tvName.setText(registerList.get(i).getRegisterName());
 
-        viewHolder.tvOwnerLogin.setText("Owner: " +repos.get(i).getOwner().getLogin());
-        viewHolder.tvOwnerUrl.setText(repos.get(i).getOwner().getUrl());
-
-
+        viewHolder.tvRegValue.setText(registerList.get(i).getRegisterValue());
+        viewHolder.tvRegDesc.setText(registerList.get(i).getRegisterDescription());
 
         //check if view is expanded
         final boolean isExpanded = expandState.get(i);
@@ -59,25 +60,21 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
 
     @Override
     public int getItemCount() {
-        return repos.size();
+        return registerList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tvName,tvOwnerLogin, tvOwnerUrl;
-        private ImageView ivOwner;
+        private TextView tvName, tvRegValue, tvRegDesc;
         public RelativeLayout buttonLayout;
         public LinearLayout expandableLayout;
 
         public ViewHolder(View view) {
             super(view);
 
-            tvName = (TextView)view.findViewById(R.id.textView_name);
-            tvId = (TextView)view.findViewById(R.id.textView_id);
-            tvUrl = (TextView)view.findViewById(R.id.textView_url);
-            tvOwnerLogin = (TextView)view.findViewById(R.id.textView_Owner);
-            tvOwnerUrl = (TextView)view.findViewById(R.id.textView_OwnerUrl);
-            ivOwner = (ImageView) view.findViewById(R.id.imageView_Owner);
+            tvName = (TextView)view.findViewById(R.id.tv_regname);
+            tvRegValue = (TextView)view.findViewById(R.id.tv_regvalue);
+            tvRegDesc = (TextView)view.findViewById(R.id.tv_regdesc);
 
             buttonLayout = (RelativeLayout) view.findViewById(R.id.button);
             expandableLayout = (LinearLayout) view.findViewById(R.id.expandableLayout);

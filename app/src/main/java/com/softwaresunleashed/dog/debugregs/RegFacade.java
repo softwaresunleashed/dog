@@ -19,6 +19,12 @@ public class RegFacade {
             case RegAddr.CPSR:
                 debugRegisters = new CPSR_DebugRegisters();
                 break;
+            case RegAddr.CPUECTLR_EL1:
+                debugRegisters = new CPUECTLR_DebugRegisters();
+                break;
+            case RegAddr.CPUACTLR_EL1:
+                debugRegisters = new CPUACTLR_DebugRegisters();
+                break;
 
             default:
                 break;

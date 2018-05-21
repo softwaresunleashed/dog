@@ -1,5 +1,6 @@
 package com.softwaresunleashed.dog.activities;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,6 +27,10 @@ public class NPISelelctionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_npiselelction);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("D.O.G.");
+        ab.setSubtitle("Select NPI DataBase...");
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 

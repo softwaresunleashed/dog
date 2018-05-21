@@ -2,6 +2,8 @@ package com.softwaresunleashed.dog.debugregs;
 
 public class ESR_EL3_DebugRegisters extends DebugRegisters {
 
+    private String regName = "ESR_EL3";
+
     private String regDesc = "[31:26]\tEC\tException Class. Indicates the reason for the exception that this register holds information about.\n" +
             "[25]\tIL\t\n" +
             "Instruction Length for synchronous exceptions. The possible values are:\n" +
@@ -28,6 +30,7 @@ public class ESR_EL3_DebugRegisters extends DebugRegisters {
 
     public ESR_EL3_DebugRegisters() {
         setRegister_description(regDesc);
+        setRegister_name(regName);
     }
 
     @Override
@@ -35,4 +38,10 @@ public class ESR_EL3_DebugRegisters extends DebugRegisters {
         String display = "ESR_EL3 : " + value + "\n" + getRegister_description();
         return display;
     }
+
+    @Override
+    public String populate_regname_view() {
+        return getRegister_name();
+    }
+
 }

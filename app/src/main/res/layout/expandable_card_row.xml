@@ -22,13 +22,14 @@
             android:layout_height="48dp">
 
             <TextView
-                android:id="@+id/textView_name"
+                android:id="@+id/tv_regname"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="Register Name"/>
 
             <!--My dropdown Button -->
             <RelativeLayout
@@ -68,14 +69,16 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView_Owner"
+                    android:id="@+id/tv_regvalue"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="Value"/>
                 <TextView
-                    android:id="@+id/textView_OwnerUrl"
+                    android:id="@+id/tv_regdesc"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="description"/>
 
 
             </LinearLayout>

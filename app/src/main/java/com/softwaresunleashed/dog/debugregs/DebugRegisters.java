@@ -3,6 +3,7 @@ package com.softwaresunleashed.dog.debugregs;
 public abstract class DebugRegisters {
 
 
+    String register_name;
     String register_description;
 
     public String getRegister_description() {
@@ -13,5 +14,14 @@ public abstract class DebugRegisters {
         this.register_description = register_description;
     }
 
+    public String getRegister_name() {
+        return register_name;
+    }
+
+    public void setRegister_name(String register_name) {
+        this.register_name = register_name;
+    }
+
     abstract public String populate_description_view(String value);
+    abstract public String populate_regname_view();
 }

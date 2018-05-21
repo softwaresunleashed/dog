@@ -11,4 +11,10 @@ public class RegAddr {
     public static final String CPSR = "121384";
 
 
+    // CPUECTLR
+    public static final String CPUECTLR_EL1 = "118673";
+    // CPUACTLR
+    public static final String CPUACTLR_EL1 = "118672";
+
+
 }
