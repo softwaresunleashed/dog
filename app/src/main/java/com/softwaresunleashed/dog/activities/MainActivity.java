@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("D.O.G.");
+        ab.setSubtitle("Debug On Go");
+
 
         tv_description = (TextView) findViewById(R.id.tv_description);
         et_register_val = (EditText) findViewById(R.id.et_register_val);
