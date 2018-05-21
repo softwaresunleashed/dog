@@ -16,14 +16,13 @@ import android.widget.Toast;
 
 import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
-import com.softwaresunleashed.dog.ExpandableRecyclerAdapter;
-import com.softwaresunleashed.dog.Preferences;
+import com.softwaresunleashed.dog.recyclerview_regdescription.ExpandableRecyclerAdapter;
+import com.softwaresunleashed.dog.utils.Preferences;
 import com.softwaresunleashed.dog.R;
-import com.softwaresunleashed.dog.RegisterDetailsHolder;
+import com.softwaresunleashed.dog.recyclerview_regdescription.RegisterDetailsHolder;
 import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.database.TableDefinitions;
 import com.softwaresunleashed.dog.debugregs.DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.ESR_EL1_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.RegFacade;
 import com.softwaresunleashed.dog.debugregs.Undefined_DebugRegisters;
 

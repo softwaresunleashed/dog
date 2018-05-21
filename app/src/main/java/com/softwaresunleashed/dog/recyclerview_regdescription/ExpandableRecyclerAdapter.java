@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog;
+package com.softwaresunleashed.dog.recyclerview_regdescription;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.softwaresunleashed.dog.R;
 
 import java.util.List;
 

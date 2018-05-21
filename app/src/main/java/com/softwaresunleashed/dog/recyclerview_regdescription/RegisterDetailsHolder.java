@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog;
+package com.softwaresunleashed.dog.recyclerview_regdescription;
 
 public class RegisterDetailsHolder {
 
