@@ -1,12 +1,14 @@
-package com.softwaresunleashed.dog.debugregs;
+package com.softwaresunleashed.dog.debugregs.implementation;
 
-public class CPUACTLR_DebugRegisters extends DebugRegisters {
+import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
 
-    private String regName = "CPUACTLR";
+public class Undefined_DebugRegisters extends DebugRegisters {
 
-    private String regDesc = "";
+    private String regName = "Undefined";
 
-    public CPUACTLR_DebugRegisters() {
+    private String regDesc = "Undefined / UnMapped Register Address";
+
+    public Undefined_DebugRegisters() {
         setRegister_description(regDesc);
         setRegister_name(regName);
     }

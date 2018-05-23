@@ -1,4 +1,11 @@
-package com.softwaresunleashed.dog.debugregs;
+package com.softwaresunleashed.dog.debugregs.base_classes;
+
+import com.softwaresunleashed.dog.debugregs.implementation.CPSR_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.CPUACTLR_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.CPUECTLR_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.ESR_EL1_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.ESR_EL2_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.ESR_EL3_DebugRegisters;
 
 public class RegFacade {
 

@@ -1,4 +1,6 @@
-package com.softwaresunleashed.dog.debugregs;
+package com.softwaresunleashed.dog.debugregs.implementation;
+
+import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
 
 public class CPUECTLR_DebugRegisters extends DebugRegisters {
 

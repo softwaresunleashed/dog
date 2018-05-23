@@ -23,9 +23,9 @@ import com.softwaresunleashed.dog.R;
 import com.softwaresunleashed.dog.recyclerview_regdescription.RegisterDetailsHolder;
 import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.database.TableDefinitions;
-import com.softwaresunleashed.dog.debugregs.DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.RegFacade;
-import com.softwaresunleashed.dog.debugregs.Undefined_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.base_classes.RegFacade;
+import com.softwaresunleashed.dog.debugregs.implementation.Undefined_DebugRegisters;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -110,8 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 InputStreamReader streamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(streamReader);
 
-                String line;
+                // Clear register list before starting
+                data.clear();
 
+                String line;
                 while (( line = bufferedReader.readLine()) != null) {
                     parse_each_line(line);
                 }

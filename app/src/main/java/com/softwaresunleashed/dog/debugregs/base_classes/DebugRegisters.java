@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog.debugregs;
+package com.softwaresunleashed.dog.debugregs.base_classes;
 
 public abstract class DebugRegisters {
 

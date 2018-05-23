@@ -1,4 +1,6 @@
-package com.softwaresunleashed.dog.debugregs;
+package com.softwaresunleashed.dog.debugregs.implementation;
+
+import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
 
 public class ESR_EL1_DebugRegisters extends DebugRegisters {
 
@@ -34,7 +36,7 @@ public class ESR_EL1_DebugRegisters extends DebugRegisters {
 
     @Override
     public String populate_description_view(String value) {
-        String display = "ESR_EL1 : " + value + "\n" + getRegister_description();
+        String display = regName + " : " + value + "\n" + getRegister_description();
         return display;
     }
 
