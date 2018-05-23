@@ -29,7 +29,17 @@ public class RegisterDetailsHolder {
         this.registerDescription = registerDescription;
     }
 
+    public String getRegisterAddress() {
+        return registerAddress;
+    }
+
+    public void setRegisterAddress(String registerAddress) {
+        this.registerAddress = registerAddress;
+    }
+
+
     String registerName;
     String registerValue;
+    String registerAddress;
     String registerDescription;
 }

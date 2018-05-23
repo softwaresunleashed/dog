@@ -219,9 +219,12 @@ public class MainActivity extends AppCompatActivity {
                     // No Detail present. Go to Debug Register Implementation
                     DebugRegisters debugRegisters = RegFacade.getRegisterInstance(lngRegAddress.toString());
                     // Call respective register's populate description routine
-                    displayText += debugRegisters.populate_description_view(regValue);
-                    registerDetailsHolder.setRegisterDescription(debugRegisters.populate_description_view(regValue));
+                    displayText += debugRegisters.populate_description_view(regAddress, regValue);
+                    registerDetailsHolder.setRegisterDescription(debugRegisters.populate_description_view(regAddress, regValue));
                     registerDetailsHolder.setRegisterName(debugRegisters.populate_regname_view());
+
+                    registerDetailsHolder.setRegisterValue(debugRegisters.getRegister_value());
+                    registerDetailsHolder.setRegisterAddress(debugRegisters.getRegister_address());
                 } else {
                     displayText += "RegDetailId : " + detailId + "\n";
 
@@ -237,6 +240,8 @@ public class MainActivity extends AppCompatActivity {
                             displayText += c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n";
                             registerDetailsHolder.setRegisterDescription(c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n");
                             registerDetailsHolder.setRegisterName(regName);
+                            registerDetailsHolder.setRegisterValue(regValue);
+                            registerDetailsHolder.setRegisterAddress(regAddress);
                         } while (c_desc.moveToNext());
                     }
                 }

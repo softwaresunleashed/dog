@@ -43,7 +43,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         viewHolder.setIsRecyclable(false);
 
         viewHolder.tvName.setText(registerList.get(i).getRegisterName());
-
+        viewHolder.tvRegAddr.setText("0x" + registerList.get(i).getRegisterAddress());
         viewHolder.tvRegValue.setText(registerList.get(i).getRegisterValue());
         viewHolder.tvRegDesc.setText(registerList.get(i).getRegisterDescription());
 
@@ -67,15 +67,16 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tvName, tvRegValue, tvRegDesc;
+        private TextView tvName, tvRegValue, tvRegAddr, tvRegDesc;
         public RelativeLayout buttonLayout;
         public LinearLayout expandableLayout;
 
         public ViewHolder(View view) {
             super(view);
 
-            tvName = (TextView)view.findViewById(R.id.tv_regname);
-            tvRegValue = (TextView)view.findViewById(R.id.tv_regvalue);
+            tvName = (TextView)view.findViewById(R.id.tv_regName);
+            tvRegAddr = (TextView)view.findViewById(R.id.tv_regAddress);
+            tvRegValue = (TextView)view.findViewById(R.id.tv_regValue);
             tvRegDesc = (TextView)view.findViewById(R.id.tv_regdesc);
 
             buttonLayout = (RelativeLayout) view.findViewById(R.id.button);
