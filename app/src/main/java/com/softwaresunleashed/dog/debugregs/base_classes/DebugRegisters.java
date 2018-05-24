@@ -1,5 +1,7 @@
 package com.softwaresunleashed.dog.debugregs.base_classes;
 
+import java.util.ArrayList;
+
 public abstract class DebugRegisters {
 
 
@@ -7,25 +9,26 @@ public abstract class DebugRegisters {
     private String register_description;
     private String register_value;
     private String register_address;
+    private ArrayList<RegBitField> parsedDescription;
+
 
     public String populate_description_view(String register_address, String value) {
+        // Set Register Address
         setRegister_address(register_address);
+
+        // Set Register Value
         setRegister_value(value);
-//        String display = getRegister_name() + " : " + value + "\n" + getRegister_description();
+
+        // Parse Description
+        parsedDescription = DebugRegisterDescriptionParser.parseDescription(getRegister_description(), value);
+
+
         String display = "Description : " + "\n" + getRegister_description();
         return display;
     }
 
     public String populate_regname_view() {
         return getRegister_name();
-    }
-
-    public String populate_regaddr_view() {
-        return getRegister_address();
-    }
-
-    public String populate_regvalue_view() {
-        return getRegister_value();
     }
 
 
