@@ -6,29 +6,29 @@ public class CPSR_DebugRegisters extends DebugRegisters {
 
     private String regName = "CPSR";
 
-    private String regDesc = "<BIT_FIELD>\n" +
-            "        <START_BIT VAL=\"31\" />\n" +
-            "        <END_BIT VAL=\"31\"  />\n" +
-            "        <NAME VAL=\"N\" />\n" +
-            "        <FUNCTION VAL=\"Overflow flag\" />\n" +
-            "        <VALID_VALUE VAL=\"0\" VAL_MEANING=\"no overflow.\" />\n" +
-            "        <VALID_VALUE VAL=\"1\" VAL_MEANING=\"overflow in last operation\" />\n" +
-            "</BIT_FIELD>\n" +
-            "<BIT_FIELD>\n" +
-            "        <START_BIT VAL=\"30\" />\n" +
-            "        <END_BIT VAL=\"30\"  />\n" +
-            "        <NAME VAL=\"Z\" />\n" +
-            "        <FUNCTION VAL=\"Zero flag\" />\n" +
-            "        <VALID_VALUE VAL=\"0\" VAL_MEANING=\"nonzero result.\" />\n" +
-            "        <VALID_VALUE VAL=\"1\" VAL_MEANING=\"result of 0 in last operation\" />\n" +
-            "</BIT_FIELD>\n" +
-            "<BIT_FIELD>\n" +
-            "        <START_BIT VAL=\"29\" />\n" +
-            "        <END_BIT VAL=\"29\"  />\n" +
-            "        <NAME VAL=\"C\" />\n" +
-            "        <FUNCTION VAL=\"Carry/borrow flag\" />\n" +
-            "        <VALID_VALUE VAL=\"0\" VAL_MEANING=\"no carry or borrow.\" />\n" +
-            "        <VALID_VALUE VAL=\"1\" VAL_MEANING=\"carry or borrow in last operation\" />\n" +
+    private String regDesc = "<BIT_FIELD>" +
+            "        <START_BIT VAL=\"31\" />" +
+            "        <END_BIT VAL=\"31\"  />" +
+            "        <NAME VAL=\"N\" />" +
+            "        <FUNCTION VAL=\"Overflow flag\" />" +
+            "        <VALID_VALUE VAL=\"0\" VAL_MEANING=\"no overflow.\" />" +
+            "        <VALID_VALUE VAL=\"1\" VAL_MEANING=\"overflow in last operation\" />" +
+            "</BIT_FIELD>" +
+            "<BIT_FIELD>" +
+            "        <START_BIT VAL=\"30\" />" +
+            "        <END_BIT VAL=\"30\"  />" +
+            "        <NAME VAL=\"Z\" />" +
+            "        <FUNCTION VAL=\"Zero flag\" />" +
+            "        <VALID_VALUE VAL=\"0\" VAL_MEANING=\"nonzero result.\" />" +
+            "        <VALID_VALUE VAL=\"1\" VAL_MEANING=\"result of 0 in last operation\" />" +
+            "</BIT_FIELD>" +
+            "<BIT_FIELD>" +
+            "        <START_BIT VAL=\"29\" />" +
+            "        <END_BIT VAL=\"29\"  />" +
+            "        <NAME VAL=\"C\" />" +
+            "        <FUNCTION VAL=\"Carry/borrow flag\" />" +
+            "        <VALID_VALUE VAL=\"0\" VAL_MEANING=\"no carry or borrow.\" />" +
+            "        <VALID_VALUE VAL=\"1\" VAL_MEANING=\"carry or borrow in last operation\" />" +
             "</BIT_FIELD>";
 
     public CPSR_DebugRegisters() {
