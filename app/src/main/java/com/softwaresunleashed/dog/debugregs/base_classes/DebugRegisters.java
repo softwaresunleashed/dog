@@ -59,7 +59,8 @@ public abstract class DebugRegisters {
     }
 
     public void setRegister_value(String register_value) {
-        this.register_value = register_value;
+        this.register_value = "0x800003cd";
+//        this.register_value = register_value;
     }
 
 
