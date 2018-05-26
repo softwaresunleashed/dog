@@ -83,7 +83,7 @@ public class XMLParser {
                             regBitField.validValuesArrayList.add(validValues);
                         }
                         if(name.equals(BIT_FIELD_TAG)){
-                            // Add the bit field description to Bit Field Array
+                            // Add the bit field to Bit Field Array
                             regBitFieldsArray.add(regBitField);
                         }
                         break;
