@@ -96,9 +96,22 @@
                     android:text="Reg Description"/>
 
 
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tl_analysis_table">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                    </TableRow>
+
+                </TableLayout>
+
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
+
 </android.support.v7.widget.CardView>

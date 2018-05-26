@@ -20,12 +20,12 @@ public abstract class DebugRegisters {
         setRegister_value(value);
 
         // Parse Description
-        parsedDescription = DebugRegisterDescriptionParser.parseDescription(getRegister_description(), value);
-
+        setParsedDescription(DebugRegisterDescriptionParser.parseDescription(getRegister_description(), value));
 
         String display = "Description : " + "\n" + getRegister_description();
         return display;
     }
+
 
     public String populate_regname_view() {
         return getRegister_name();
@@ -71,6 +71,14 @@ public abstract class DebugRegisters {
 
     public void setRegister_address(String register_address) {
         this.register_address = register_address;
+    }
+
+    public ArrayList<RegBitField> getParsedDescription() {
+        return parsedDescription;
+    }
+
+    public void setParsedDescription(ArrayList<RegBitField> parsedDescription) {
+        this.parsedDescription = parsedDescription;
     }
 
 

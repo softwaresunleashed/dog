@@ -10,10 +10,16 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.softwaresunleashed.dog.R;
+import com.softwaresunleashed.dog.debugregs.base_classes.RegBitField;
+import com.softwaresunleashed.dog.debugregs.base_classes.ValidValues;
+import com.softwaresunleashed.dog.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRecyclerAdapter.ViewHolder> {
@@ -47,6 +53,62 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         viewHolder.tvRegValue.setText(registerList.get(i).getRegisterValue());
         viewHolder.tvRegDesc.setText(registerList.get(i).getRegisterDescription());
 
+        ArrayList<RegBitField> rbfList = registerList.get(i).getRegisterBitField();
+        if(rbfList != null){
+            for (RegBitField rbf: rbfList) {
+
+                try{
+                    TableRow tr = new TableRow(this.context);
+                    tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                    // Bit Field description
+                    TextView tvBitField = new TextView(this.context);
+                    if(rbf.end_bit == rbf.start_bit){
+                        tvBitField.setText("[" + String.valueOf(rbf.end_bit) + "]");
+                    } else {
+                        tvBitField.setText("[" + String.valueOf(rbf.end_bit) + ":" + String.valueOf(rbf.start_bit) + "]");
+                    }
+                    tvBitField.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+
+                    TextView tvFieldName = new TextView(this.context);
+                    tvFieldName.setText(rbf.field_function);
+                    tvFieldName.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                    TextView tvFieldFunction = new TextView(this.context);
+                    tvFieldFunction.setText(rbf.field_name);
+                    tvFieldFunction.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                    TextView tvFieldValidValueMeaning = new TextView(this.context);
+                    long register_value = Utils.HexToLong(registerList.get(i).getRegisterValue()).longValue();
+                    long field_value = Utils.bitExtracted(register_value, (rbf.end_bit-rbf.start_bit+1), rbf.end_bit);
+                    String meaning = "Undefined";
+                    for (ValidValues validValues: rbf.validValuesArrayList) {
+                        if (validValues.getValue() == field_value)
+                            meaning = validValues.getMeaning();
+                    }
+                    tvFieldValidValueMeaning.setText(field_value + ":" + meaning);
+                    tvFieldValidValueMeaning.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+
+
+                    /* Add Views to row. */
+                    tr.addView(tvBitField);
+                    tr.addView(tvFieldName);
+                    //tr.addView(tvFieldFunction);
+                    tr.addView(tvFieldValidValueMeaning);
+
+
+                    /* Add row to TableLayout. */
+                    viewHolder.tl_analysis_table.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+
         //check if view is expanded
         final boolean isExpanded = expandState.get(i);
         viewHolder.expandableLayout.setVisibility(isExpanded?View.VISIBLE:View.GONE);
@@ -70,6 +132,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         private TextView tvName, tvRegValue, tvRegAddr, tvRegDesc;
         public RelativeLayout buttonLayout;
         public LinearLayout expandableLayout;
+        private TableLayout tl_analysis_table;
 
         public ViewHolder(View view) {
             super(view);
@@ -81,6 +144,8 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
 
             buttonLayout = (RelativeLayout) view.findViewById(R.id.button);
             expandableLayout = (LinearLayout) view.findViewById(R.id.expandableLayout);
+            tl_analysis_table = (TableLayout) view.findViewById(R.id.tl_analysis_table);
+
         }
     }
 

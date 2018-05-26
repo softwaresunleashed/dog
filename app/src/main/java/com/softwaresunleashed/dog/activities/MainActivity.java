@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText et_register_val;
     TextView tv_description;
+
     Cursor c = null;
     int RC_FILE_OPEN_DIALOG = 123;
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         tv_description = (TextView) findViewById(R.id.tv_description);
         et_register_val = (EditText) findViewById(R.id.et_register_val);
+
 
         data = new ArrayList<RegisterDetailsHolder>();
 
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i2 = new Intent(getApplicationContext(), FileChooser.class);
                 i2.putExtra(Constants.SELECTION_MODE,Constants.SELECTION_MODES.SINGLE_SELECTION.ordinal());
-                i2.putExtra(Constants.ALLOWED_FILE_EXTENSIONS, "txt");
+                i2.putExtra(Constants.ALLOWED_FILE_EXTENSIONS, "txt;xml");
                 startActivityForResult(i2,RC_FILE_OPEN_DIALOG);
             }
         });
@@ -225,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
                     registerDetailsHolder.setRegisterValue(debugRegisters.getRegister_value());
                     registerDetailsHolder.setRegisterAddress(debugRegisters.getRegister_address());
+                    registerDetailsHolder.setRegisterBitField(debugRegisters.getParsedDescription());
                 } else {
                     displayText += "RegDetailId : " + detailId + "\n";
 
@@ -242,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
                             registerDetailsHolder.setRegisterName(regName);
                             registerDetailsHolder.setRegisterValue(regValue);
                             registerDetailsHolder.setRegisterAddress(regAddress);
+                            registerDetailsHolder.setRegisterBitField(null);        //TODO: Instead of null, parse bitfield from database and fill in here
                         } while (c_desc.moveToNext());
                     }
                 }

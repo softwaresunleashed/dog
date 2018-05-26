@@ -1,5 +1,9 @@
 package com.softwaresunleashed.dog.recyclerview_regdescription;
 
+import com.softwaresunleashed.dog.debugregs.base_classes.RegBitField;
+
+import java.util.ArrayList;
+
 public class RegisterDetailsHolder {
 
     public RegisterDetailsHolder() {
@@ -37,9 +41,18 @@ public class RegisterDetailsHolder {
         this.registerAddress = registerAddress;
     }
 
+    public ArrayList<RegBitField> getRegisterBitField() {
+        return registerBitField;
+    }
+
+    public void setRegisterBitField(ArrayList<RegBitField> registerBitField) {
+        this.registerBitField = registerBitField;
+    }
+
 
     String registerName;
     String registerValue;
     String registerAddress;
     String registerDescription;
+    ArrayList<RegBitField> registerBitField;
 }
