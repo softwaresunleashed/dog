@@ -10,13 +10,12 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-
+////RegistersField XML Format
 ////<BIT_FIELD>
 ////        <START_BIT VAL="" />
 ////        <END_BIT VAL=  />
 ////        <NAME VAL= />
 ////        <FUNCTION VAL= />
-////
 ////        <VALID_VALUE VAL="0" VAL_MEANING="" />
 ////        <VALID_VALUE VAL="0" VAL_MEANING="" />
 ////</BIT_FIELD>

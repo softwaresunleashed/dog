@@ -12,13 +12,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
 import com.softwaresunleashed.dog.recyclerview_regdescription.ExpandableRecyclerAdapter;
+import com.softwaresunleashed.dog.utils.InputFileXMLParser;
 import com.softwaresunleashed.dog.utils.Preferences;
 import com.softwaresunleashed.dog.R;
 import com.softwaresunleashed.dog.recyclerview_regdescription.RegisterDetailsHolder;
@@ -104,6 +104,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void parse_dump_file(String absolutePath) {
+
+        if(absolutePath.contains(".txt"))
+            parse_txt_file(absolutePath);
+
+        if(absolutePath.contains(".xml"))
+            parse_xml_file(absolutePath);
+
+
+    }
+
+
+    private void parse_txt_file(String absolutePath) {
         try {
             File file = new File(absolutePath);
             FileInputStream inputStream = new FileInputStream(file);
@@ -120,6 +132,36 @@ public class MainActivity extends AppCompatActivity {
                 while (( line = bufferedReader.readLine()) != null) {
                     parse_each_line(line);
                 }
+            }
+            inputStream.close(); //close the file
+        } catch (java.io.FileNotFoundException e) {
+            //file doesn't exist
+            e.printStackTrace();
+        } catch (java.io.IOException e) {
+            //file IO exception
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    private void parse_xml_file(String absolutePath) {
+        try {
+            File file = new File(absolutePath);
+            FileInputStream inputStream = new FileInputStream(file);
+
+            if (inputStream != null) {
+
+                // Clear register list before starting
+                data.clear();
+
+                ArrayList<String> lines = (new InputFileXMLParser()).parseXML(inputStream);
+                for (String line: lines) {
+                    parse_each_line(line);
+                }
+
+
             }
             inputStream.close(); //close the file
         } catch (java.io.FileNotFoundException e) {
