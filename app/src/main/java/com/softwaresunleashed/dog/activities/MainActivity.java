@@ -216,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(regAddress.startsWith("0x"))
             regAddress = regAddress.substring(2);       // Skipping "0x" of the hexadecimal address
+        else
+            regAddress = getRegisterAddress(regAddress);     // Register is not a hex address but a name. Conversion required
 
         RegisterDetailsHolder registerDetailsHolder = new RegisterDetailsHolder();
         registerDetailsHolder.setRegisterValue("0x" + regAddress);
@@ -298,6 +300,43 @@ public class MainActivity extends AppCompatActivity {
         tv_description.setText(displayText);
 
         populate_recycler_view();
+    }
+
+    private String getRegisterAddress(String regAddress) {
+
+        DatabaseHelper myDbHelper = new DatabaseHelper(MainActivity.this);
+        try {
+            myDbHelper.createDataBase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+        try {
+            myDbHelper.openDataBase();
+        } catch (SQLException sqle) {
+            throw sqle;
+        }
+
+        // Apply where clause
+        String whereClause = "" + TableDefinitions.REGISTERS_NAME_STR + "=?";
+        String[] whereArgs = new String[]{
+                regAddress
+        };
+
+        // Get Detail ID of the Register
+        c = myDbHelper.query(DatabaseHelper.DB_TABLE_REGISTERS, null, whereClause, whereArgs, null, null, null);
+        String regName = null;
+        if (c.moveToFirst()) {
+            do {
+                // get Register location
+                regName = c.getString(TableDefinitions.REGISTERS_LOCATION);
+            }while (c.moveToNext());
+        }
+
+        // Convert to  Hex
+        Long regNameAddressInLong = Long.parseLong(regName);
+        regName = Long.toHexString(regNameAddressInLong);
+
+        return regName;
     }
 
     void populate_recycler_view(){
