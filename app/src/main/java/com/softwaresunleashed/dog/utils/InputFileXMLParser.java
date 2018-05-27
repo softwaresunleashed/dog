@@ -56,11 +56,13 @@ public class InputFileXMLParser {
 
             int event = myParser.getEventType();
             StringBuilder pair = null;
+            String previous_open_tag = null;
             while (event != XmlPullParser.END_DOCUMENT)  {
 
                 String name=myParser.getName();
                 switch (event){
                     case XmlPullParser.START_TAG:
+                        previous_open_tag = name;
                         if(name.equals(REGISTER_TAG)){
                             pair = new StringBuilder();
                             pair.append(myParser.getAttributeValue(null, NAME_ATTR));
@@ -68,20 +70,17 @@ public class InputFileXMLParser {
                         break;
 
                     case XmlPullParser.TEXT:
-                        if(name != null && name.equals(VALUE_TAG)) {
-                            String tx = myParser.getPositionDescription();
+                        if(previous_open_tag != null && previous_open_tag.equals(VALUE_TAG)) {
+                            String tx = myParser.getText();
                             pair.append("," + tx);
+                            previous_open_tag =  null;
                         }
                         break;
 
                     case XmlPullParser.END_TAG:
-//                        if(name != null && name.equals(VALUE_TAG)) {
-//                            String tx = myParser.getText();
-//                            pair.append("," + tx);
-//                        }
                         if(name.equals(REGISTER_TAG)){
                             // Add the bit field to Bit Field Array
-                            regAddressValuePair.add(pair);
+                            regAddressValuePair.add(pair.toString());
                         }
                         break;
                 }
