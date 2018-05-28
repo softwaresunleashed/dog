@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         if(absolutePath.contains(".xml"))
             parse_xml_file(absolutePath);
 
+        populate_recycler_view();
 
     }
 
@@ -254,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (c.moveToFirst()) {
             do {
-                displayText += tv_description.getText().toString() + "\n";
+                //displayText += tv_description.getText().toString() + "\n";
 
                 // Print Register Name
                 String regName = c.getString(TableDefinitions.REGISTERS_NAME);
@@ -299,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
         }
         tv_description.setText(displayText);
 
-        populate_recycler_view();
+
     }
 
     private String getRegisterAddress(String regAddress) {
