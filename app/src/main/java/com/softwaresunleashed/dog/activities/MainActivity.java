@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
+import com.softwaresunleashed.dog.debugregs.implementation.Dummy_DebugRegisters;
 import com.softwaresunleashed.dog.recyclerview_regdescription.ExpandableRecyclerAdapter;
 import com.softwaresunleashed.dog.utils.InputFileXMLParser;
 import com.softwaresunleashed.dog.utils.Preferences;
@@ -105,12 +106,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void parse_dump_file(String absolutePath) {
 
+        // Choose the parser depending on the file type
         if(absolutePath.contains(".txt"))
             parse_txt_file(absolutePath);
 
         if(absolutePath.contains(".xml"))
             parse_xml_file(absolutePath);
 
+        // Finally populate recycler view.
         populate_recycler_view();
 
     }
@@ -266,6 +269,12 @@ public class MainActivity extends AppCompatActivity {
                 if (detailId == null || detailId.isEmpty()) {
                     // No Detail present. Go to Debug Register Implementation
                     DebugRegisters debugRegisters = RegFacade.getRegisterInstance(lngRegAddress.toString());
+                    if(debugRegisters instanceof Dummy_DebugRegisters){
+                        // Register doesn't have Detail in CW Database....and DebugRegister Implementation is pending in code.
+                        // Hence fill in dummy register object with whatever information we have.
+                        debugRegisters.setRegister_name(regName);
+                    }
+
                     // Call respective register's populate description routine
                     displayText += debugRegisters.populate_description_view(regAddress, regValue);
                     registerDetailsHolder.setRegisterDescription(debugRegisters.populate_description_view(regAddress, regValue));
