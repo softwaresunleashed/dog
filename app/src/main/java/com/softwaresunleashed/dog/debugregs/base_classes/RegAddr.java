@@ -6,68 +6,37 @@ public class RegAddr {
     public static final String X0 = "20480";
     public static final String X1 = "20481";
     public static final String X2 = "20482";
-    public static final String X3 = ;
-    public static final String X4 = ;
-    public static final String X5 = ;
-    public static final String X6 = ;
-    public static final String X7 = ;
-    public static final String X8 = ;
-    public static final String X9 = ;
-    public static final String X10 = ;
-    public static final String X11 = ;
-    public static final String X12 = ;
-    public static final String X13 = ;
-    public static final String X14 = ;
-    public static final String X15 = ;
-    public static final String X16 = ;
-    public static final String X17 = ;
-    public static final String X18 = ;
-    public static final String X19 = ;
-    public static final String X20 = ;
-    public static final String X21 = ;
-    public static final String X22 = ;
-    public static final String X23 = ;
-    public static final String X24 = ;
-    public static final String X25 = ;
-    public static final String X26 = ;
-    public static final String X27 = ;
-    public static final String X28 = ;
-    public static final String X29 = ;
-    public static final String X30 = ;
-    public static final String X20 = ;
+    public static final String X3 = "20483";
+    public static final String X4 = "20484";
+    public static final String X5 = "20485";
+    public static final String X6 = "20486";
+    public static final String X7 = "20487";
+    public static final String X8 = "20488";
+    public static final String X9 = "20489";
+    public static final String X10 = "20490";
+    public static final String X11 = "20491";
+    public static final String X12 = "20492";
+    public static final String X13 = "20493";
+    public static final String X14 = "20494";
+    public static final String X15 = "20495";
+    public static final String X16 = "20496";
+    public static final String X17 = "20497";
+    public static final String X18 = "20498";
+    public static final String X19 = "20499";
+    public static final String X20 = "20500";
+    public static final String X21 = "20501";
+    public static final String X22 = "20502";
+    public static final String X23 = "20503";
+    public static final String X24 = "20504";
+    public static final String X25 = "20505";
+    public static final String X26 = "20506";
+    public static final String X27 = "20507";
+    public static final String X28 = "20508";
+    public static final String X29 = "20509";
+    public static final String X30 = "20510";
+    public static final String SP = "24576";
+    public static final String PC = "121385";
 
-
-
-
-
-            "20483"
-            "20484"
-            "20485"
-            "20486"
-            "20487"
-            "20488"
-            "20489"
-            "20490"
-            "20491"
-            "20492"
-            "20493"
-            "20494"
-            "20495"
-            "20496"
-            "20497"
-            "20498"
-            "20499"
-            "20500"
-            "20501"
-            "20502"
-            "20503"
-            "20504"
-            "20505"
-            "20506"
-            "20507"
-            "20508"
-            "20509"
-            "20510"
 
     //  ESR - Exception Syndrome Register
     public static final String ESR_EL1 = "115344";
