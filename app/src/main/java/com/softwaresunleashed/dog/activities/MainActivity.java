@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
+import com.softwaresunleashed.dog.debugregs.base_classes.RegBitField;
 import com.softwaresunleashed.dog.debugregs.implementation.Dummy_DebugRegisters;
 import com.softwaresunleashed.dog.recyclerview_regdescription.ExpandableRecyclerAdapter;
 import com.softwaresunleashed.dog.utils.InputFileXMLParser;
@@ -240,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (SQLException sqle) {
             throw sqle;
         }
-        Toast.makeText(MainActivity.this, "Successfully Imported", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "Successfully Imported", Toast.LENGTH_SHORT).show();
 
         // Apply where clause
         String whereClause = "" + TableDefinitions.REGISTERS_LOCATION_STR + "=?";
@@ -288,28 +289,43 @@ public class MainActivity extends AppCompatActivity {
 
                     // Get Description of each Register
                     // Apply where clause
-                    String whereClause_regdetail = "" + TableDefinitions.REGDETAILS_DETAILID_STR + "=?";
+                    String whereClause_regdetail = "" + TableDefinitions.BITFIELDS_DETAILID_STR + "=?";
                     String[] whereArgs_regdetail = new String[]{
                             detailId
                     };
-                    Cursor c_desc = myDbHelper.query(DatabaseHelper.DB_TABLE_REGDETAILS, null, whereClause_regdetail, whereArgs_regdetail, null, null, null);
+                    Cursor c_desc = myDbHelper.query(DatabaseHelper.DB_TABLE_BITFIELDS, null, whereClause_regdetail, whereArgs_regdetail, null, null, null);
                     if (c_desc.moveToFirst()) {
+                        ArrayList<RegBitField> regBitFieldArrayList = new ArrayList<RegBitField>();
                         do {
-                            displayText += c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n";
+
+                            // Fill in each register info
                             registerDetailsHolder.setRegisterDescription(c_desc.getString(TableDefinitions.REGDETAILS_BITRANGE) + " : " + c_desc.getString(TableDefinitions.REGDETAILS_DESCRIPTION) + "\n");
                             registerDetailsHolder.setRegisterName(regName);
                             registerDetailsHolder.setRegisterValue(regValue);
                             registerDetailsHolder.setRegisterAddress(regAddress);
-                            registerDetailsHolder.setRegisterBitField(null);        //TODO: Instead of null, parse bitfield from database and fill in here
+
+                            // Extract Bit Field Info from CW DB
+                            String bit_range_from_db = c_desc.getString(TableDefinitions.BITFIELDS_BITRANGE);
+                            String bitfield_desc_from_db = c_desc.getString(TableDefinitions.BITFIELDS_DESCRIPTION);
+                            String bitfield_name_from_db = c_desc.getString(TableDefinitions.BITFIELDS_NAME);
+
+                            RegBitField regBitField = new RegBitField();
+                            String split_array[]= bit_range_from_db.split(":", 2);
+                            regBitField.start_bit = Integer.parseInt(split_array[1]);
+                            regBitField.end_bit = Integer.parseInt(split_array[0]);
+                            regBitField.field_name = bitfield_name_from_db;
+                            regBitField.field_function = bitfield_desc_from_db;
+                            regBitFieldArrayList.add(regBitField);
+
+                            displayText +=  bit_range_from_db + " : " + bitfield_desc_from_db + "\n";
                         } while (c_desc.moveToNext());
+                        registerDetailsHolder.setRegisterBitField(regBitFieldArrayList);
                     }
                 }
                 data.add(registerDetailsHolder);
             } while (c.moveToNext());
         }
-        tv_description.setText(displayText);
-
-
+        //tv_description.setText(displayText);
     }
 
     private String getRegisterAddress(String regAddress) {
@@ -345,6 +361,8 @@ public class MainActivity extends AppCompatActivity {
         // Convert to  Hex
         Long regNameAddressInLong = Long.parseLong(regName);
         regName = Long.toHexString(regNameAddressInLong);
+
+        myDbHelper.close();
 
         return regName;
     }

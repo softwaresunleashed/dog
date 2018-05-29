@@ -22,7 +22,8 @@ public abstract class DebugRegisters {
         // Parse Description
         setParsedDescription(DebugRegisterDescriptionParser.parseDescription(getRegister_description(), value));
 
-        String display = "Description : " + "\n" + getRegister_description();
+//        String display = "Description : " + "\n" + getRegister_description();
+        String display = "Description : " + "\n";
         return display;
     }
 

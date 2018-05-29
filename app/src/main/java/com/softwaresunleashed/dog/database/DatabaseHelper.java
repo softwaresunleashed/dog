@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static String DB_NAME = "";  // This should be set by NPI DB selection activity (*.sqlite)
     public static String DB_TABLE_REGISTERS = "Registers";
     public static String DB_TABLE_REGDETAILS = "RegDetails";
+    public static String DB_TABLE_BITFIELDS = "BitFields";
 
     private SQLiteDatabase myDataBase;
     private final Context myContext;

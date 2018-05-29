@@ -4,9 +4,9 @@ import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
 
 public class Dummy_DebugRegisters extends DebugRegisters {
 
-    private String regName = "Undefined";
+    private String regName = "Dummy";
 
-    private String regDesc = "Undefined / UnMapped Register Address";
+    private String regDesc = "Implementation Pending.";
 
     public Dummy_DebugRegisters() {
         setRegister_description(regDesc);

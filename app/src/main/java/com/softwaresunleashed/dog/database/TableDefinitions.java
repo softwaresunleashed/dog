@@ -35,4 +35,24 @@ public class TableDefinitions {
     public static String REGDETAILS_RESETVAL_STR = "ResetVal";
     public static String REGDETAILS_DESCRIPTION_STR = "Description";
     // Table - RegDetails - END
+
+
+    // Table - BitFields
+    public static int BITFIELDS_FIELDID = 0;
+    public static int BITFIELDS_DETAILID = 1;
+    public static int BITFIELDS_NAME = 2;
+    public static int BITFIELDS_BITRANGE = 3;
+    public static int BITFIELDS_FORMAT = 4;
+    public static int BITFIELDS_ACCESS = 5;
+    public static int BITFIELDS_DESCRIPTION = 6;
+    public static String BITFIELDS_FIELDID_STR = "FieldId";
+    public static String BITFIELDS_DETAILID_STR = "DetailId";
+    public static String BITFIELDS_NAME_STR = "Name";
+    public static String BITFIELDS_BITRANGE_STR = "BitRange";
+    public static String BITFIELDS_FORMAT_STR = "Format";
+    public static String BITFIELDS_ACCESS_STR = "Access";
+    public static String BITFIELDS_DESCRIPTION_STR = "Description";
+    // Table - BitFields - END
+
+
 }
