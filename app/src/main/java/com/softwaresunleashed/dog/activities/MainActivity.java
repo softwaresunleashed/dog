@@ -326,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
         //tv_description.setText(displayText);
+        myDbHelper.close();
     }
 
     private String getRegisterAddress(String regAddress) {
