@@ -1,10 +1,10 @@
-package com.softwaresunleashed.dog.debugregs.implementation;
+package com.softwaresunleashed.dog.debugregs.implementation.ESR;
 
 import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
 
-public class ESR_EL2_DebugRegisters extends DebugRegisters {
+public class ESR_EL1_DebugRegisters extends DebugRegisters {
 
-    private String regName = "ESR_EL2";
+    private String regName = "ESR_EL1";
 
     private String regDesc = "<BIT_FIELD>" +
             "        <START_BIT VAL=\"26\" />" +
@@ -18,19 +18,12 @@ public class ESR_EL2_DebugRegisters extends DebugRegisters {
             "        <VALID_VALUE VAL=\"5\" VAL_MEANING=\"Trapped MCR or MRC access with (coproc==0b1110)\" />" +
             "        <VALID_VALUE VAL=\"6\" VAL_MEANING=\"Trapped LDC or STC access\" />" +
             "        <VALID_VALUE VAL=\"7\" VAL_MEANING=\"Access to SVE, Advanced SIMD or floating-point functionality trapped by CPACR_EL1.FPEN or CPTR_ELx.TFP control\" />" +
-            "        <VALID_VALUE VAL=\"8\" VAL_MEANING=\"Trapped VMRS access, from ID group traps, that is not reported using EC 0b000111\" />" +
-            "        <VALID_VALUE VAL=\"9\" VAL_MEANING=\"Trapped access to an ARMv8.3-PAuth instruction\" />" +
             "        <VALID_VALUE VAL=\"12\" VAL_MEANING=\"Trapped MRRC access with (coproc==0b1110)\" />" +
             "        <VALID_VALUE VAL=\"14\" VAL_MEANING=\"Illegal Execution state\" />" +
             "        <VALID_VALUE VAL=\"17\" VAL_MEANING=\"SVC instruction execution in AArch32 state\" />" +
-            "        <VALID_VALUE VAL=\"18\" VAL_MEANING=\"HVC instruction execution in AArch32 state, when HVC is not disabled\" />" +
-            "        <VALID_VALUE VAL=\"19\" VAL_MEANING=\"SMC instruction execution in AArch32 state, when SMC is not disabled\" />" +
             "        <VALID_VALUE VAL=\"21\" VAL_MEANING=\"SVC instruction execution in AArch64 state\" />" +
-            "        <VALID_VALUE VAL=\"22\" VAL_MEANING=\"HVC instruction execution in AArch64 state, when HVC is not disabled\" />" +
-            "        <VALID_VALUE VAL=\"23\" VAL_MEANING=\"SMC instruction execution in AArch64 state, when SMC is not disabled\" />" +
             "        <VALID_VALUE VAL=\"24\" VAL_MEANING=\"Trapped MSR, MRS, or System instruction execution, that is not reported using EC 0x00, 0x01, or 0x07\" />" +
             "        <VALID_VALUE VAL=\"25\" VAL_MEANING=\"Trapped access to SVE functionality, that is not reported using EC 0b000000\" />" +
-            "        <VALID_VALUE VAL=\"26\" VAL_MEANING=\"Trapped ERET, ERETAA or ERETAB instruction execution\" />" +
             "        <VALID_VALUE VAL=\"32\" VAL_MEANING=\"Instruction Abort from a lower Exception level\" />" +
             "        <VALID_VALUE VAL=\"33\" VAL_MEANING=\"Instruction Abort taken without a change in Exception level\" />" +
             "        <VALID_VALUE VAL=\"34\" VAL_MEANING=\"PC alignment fault\" />" +
@@ -47,7 +40,6 @@ public class ESR_EL2_DebugRegisters extends DebugRegisters {
             "        <VALID_VALUE VAL=\"52\" VAL_MEANING=\"Watchpoint exception from a lower Exception level\" />" +
             "        <VALID_VALUE VAL=\"53\" VAL_MEANING=\"Watchpoint exception taken without a change in Exception level\" />" +
             "        <VALID_VALUE VAL=\"56\" VAL_MEANING=\"BKPT instruction execution in AArch32 state\" />" +
-            "        <VALID_VALUE VAL=\"58\" VAL_MEANING=\"Vector Catch exception from AArch32 state\" />" +
             "        <VALID_VALUE VAL=\"60\" VAL_MEANING=\" BRK instruction execution in AArch64 state\" />" +
             "</BIT_FIELD>" +
             "<BIT_FIELD>" +
@@ -74,11 +66,12 @@ public class ESR_EL2_DebugRegisters extends DebugRegisters {
             "        <VALID_VALUE VAL=\"0\" VAL_MEANING=\"To Be Implemented\" />" +
             "</BIT_FIELD>";
 
-    public ESR_EL2_DebugRegisters() {
+
+
+    public ESR_EL1_DebugRegisters() {
         setRegister_description(regDesc);
         setRegister_name(regName);
     }
-
 
 
 }

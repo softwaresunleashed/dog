@@ -1,4 +1,4 @@
-package com.softwaresunleashed.dog.debugregs.implementation;
+package com.softwaresunleashed.dog.debugregs.implementation.CPUACTLR;
 
 import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
 

@@ -1,15 +1,15 @@
 package com.softwaresunleashed.dog.debugregs.base_classes;
 
-import com.softwaresunleashed.dog.debugregs.implementation.CPSR_DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.implementation.CPUACTLR_DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.implementation.CPUECTLR_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.CPSR.CPSR_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.CPUACTLR.CPUACTLR_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.CPUECTLR.CPUECTLR_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.implementation.Dummy_DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.implementation.ESR_EL1_DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.implementation.ESR_EL2_DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.implementation.ESR_EL3_DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.implementation.SCTLR_EL1_DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.implementation.SCTLR_EL2_DebugRegisters;
-import com.softwaresunleashed.dog.debugregs.implementation.SCTLR_EL3_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.ESR.ESR_EL1_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.ESR.ESR_EL2_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.ESR.ESR_EL3_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.SCTLR.SCTLR_EL1_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.SCTLR.SCTLR_EL2_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.SCTLR.SCTLR_EL3_DebugRegisters;
 
 public class RegFacade {
 
@@ -18,6 +18,11 @@ public class RegFacade {
         DebugRegisters debugRegisters = null;
 
         switch (regAddress){
+
+            // ARM CORE
+            case RegAddr.ESR_EL1:
+                debugRegisters = new ESR_EL1_DebugRegisters();
+                break;
 
             case RegAddr.ESR_EL1:
                 debugRegisters = new ESR_EL1_DebugRegisters();

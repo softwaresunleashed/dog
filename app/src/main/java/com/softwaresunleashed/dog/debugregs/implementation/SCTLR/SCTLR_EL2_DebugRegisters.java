@@ -1,10 +1,10 @@
-package com.softwaresunleashed.dog.debugregs.implementation;
+package com.softwaresunleashed.dog.debugregs.implementation.SCTLR;
 
 import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
 
-public class SCTLR_EL3_DebugRegisters extends DebugRegisters {
+public class SCTLR_EL2_DebugRegisters extends DebugRegisters {
 
-    private String regName = "SCTLR_EL3";
+    private String regName = "SCTLR_EL2";
 
     private String regDesc = "<BIT_FIELD>" +
             "        <START_BIT VAL=\"30\" />" +
@@ -141,7 +141,7 @@ public class SCTLR_EL3_DebugRegisters extends DebugRegisters {
             "        <VALID_VALUE VAL=\"0\" VAL_MEANING=\"Disables EL2 MMU. This is the reset value.\" />" +
             "</BIT_FIELD>";
 
-    public SCTLR_EL3_DebugRegisters() {
+    public SCTLR_EL2_DebugRegisters() {
         setRegister_description(regDesc);
         setRegister_name(regName);
     }
