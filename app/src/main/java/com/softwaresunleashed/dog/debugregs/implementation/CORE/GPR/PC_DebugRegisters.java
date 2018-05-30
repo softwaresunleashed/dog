@@ -10,7 +10,7 @@ public class PC_DebugRegisters extends DebugRegisters {
             "        <START_BIT VAL=\"0\" />" +
             "        <END_BIT VAL=\"63\"  />" +
             "        <NAME VAL=\"PC\" />" +
-            "        <FUNCTION VAL=\"ARM CORE GPR (64-bit)\" />" +
+            "        <FUNCTION VAL=\"Program Counter points to address of current instruction being executed\" />" +
             "</BIT_FIELD>";
 
     public PC_DebugRegisters() {
