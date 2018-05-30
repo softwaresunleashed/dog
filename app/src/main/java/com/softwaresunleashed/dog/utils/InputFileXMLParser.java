@@ -1,5 +1,10 @@
 package com.softwaresunleashed.dog.utils;
 
+import android.content.Context;
+import android.widget.Toast;
+
+import com.softwaresunleashed.dog.activities.MainActivity;
+import com.softwaresunleashed.dog.database.DatabaseHelper;
 import com.softwaresunleashed.dog.debugregs.base_classes.RegBitField;
 import com.softwaresunleashed.dog.debugregs.base_classes.ValidValues;
 
@@ -44,6 +49,7 @@ public class InputFileXMLParser {
     private XmlPullParser myParser;
     private ArrayList<String> regAddressValuePair;
 
+    public static Context mApplicationContext;
 
     public ArrayList<String> parseXML(FileInputStream fisXML_Dump_String){
 
@@ -66,6 +72,12 @@ public class InputFileXMLParser {
                         if(name.equals(REGISTER_TAG)){
                             pair = new StringBuilder();
                             pair.append(myParser.getAttributeValue(null, NAME_ATTR));
+                        }
+                        if(name.equals(REGISTER_GROUPS_TAG)){
+                            String db_name_from_xml_file = myParser.getAttributeValue(null, PROCESSOR_ATTR);
+                            db_name_from_xml_file = db_name_from_xml_file + ".sqlite";  // Add sqlite to DB file name
+                            Preferences.setCurrentNPIDB(mApplicationContext, db_name_from_xml_file);
+                            DatabaseHelper.DB_NAME = db_name_from_xml_file;
                         }
                         break;
 

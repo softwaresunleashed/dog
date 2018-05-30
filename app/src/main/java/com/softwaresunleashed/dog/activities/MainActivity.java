@@ -1,5 +1,6 @@
 package com.softwaresunleashed.dog.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -40,14 +41,15 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText et_register_val;
-    TextView tv_description;
+    private EditText et_register_val;
+    private TextView tv_description;
 
-    Cursor c = null;
+    private Cursor c = null;
     int RC_FILE_OPEN_DIALOG = 123;
 
     private RecyclerView recyclerView;
     private List<RegisterDetailsHolder> data;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         ab.setTitle("D.O.G.");
         ab.setSubtitle("Debug On Go");
 
+        // Set Application context
+        InputFileXMLParser.mApplicationContext = getApplicationContext();
 
         tv_description = (TextView) findViewById(R.id.tv_description);
         et_register_val = (EditText) findViewById(R.id.et_register_val);
