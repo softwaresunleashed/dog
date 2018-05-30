@@ -37,14 +37,24 @@ public class RegAddr {
     public static final String SP = "24576";
     public static final String PC = "121385";
 
+    // Special Purpose
+    public static final String DLR_EL0 = "121385";  // Same as PC
+    public static final String CPSR = "121384"; // CPSR (AARCH32) / PSTATE (AARC64)- Current Program Status Register
+    public static final String DSPSR_EL0 = "121384"; // Same as CPSR/PSTATE
+    public static final String SP_EL0 = "115208";
+    public static final String SP_EL1 = "123400";
+    public static final String SP_EL2 = "127496";
+    public static final String SP_EL3 = ""; // TODO : No address present in CW DB
+
+    // PSTATE
+    public static final String CURRENTEL = "115218";
+
 
     //  ESR - Exception Syndrome Register
     public static final String ESR_EL1 = "115344";
     public static final String ESR_EL2 = "123536";
     public static final String ESR_EL3 = "127632";
 
-    // CPSR (AARCH32) / PSTATE (AARC64)- Current Program Status Register
-    public static final String CPSR = "121384";
 
     // CPUECTLR
     public static final String CPUECTLR_EL1 = "118673";

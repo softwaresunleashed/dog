@@ -40,9 +40,15 @@ import com.softwaresunleashed.dog.debugregs.implementation.Dummy_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.implementation.ESR.ESR_EL1_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.implementation.ESR.ESR_EL2_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.implementation.ESR.ESR_EL3_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.PSTATE.CURRRENTEL_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.implementation.SCTLR.SCTLR_EL1_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.implementation.SCTLR.SCTLR_EL2_DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.implementation.SCTLR.SCTLR_EL3_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.SPECIAL_PURPOSE.DLR_EL0_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.SPECIAL_PURPOSE.SP_EL0_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.SPECIAL_PURPOSE.SP_EL1_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.SPECIAL_PURPOSE.SP_EL2_DebugRegisters;
+import com.softwaresunleashed.dog.debugregs.implementation.SPECIAL_PURPOSE.SP_EL3_DebugRegisters;
 
 public class RegFacade {
 
@@ -154,6 +160,26 @@ public class RegFacade {
                 break;
 
             // Special Purpose
+//            case RegAddr.DLR_EL0:
+//                debugRegisters = new DLR_EL0_DebugRegisters();
+//                break;
+            case RegAddr.SP_EL0:
+                debugRegisters = new SP_EL0_DebugRegisters();
+                break;
+            case RegAddr.SP_EL1:
+                debugRegisters = new SP_EL1_DebugRegisters();
+                break;
+            case RegAddr.SP_EL2:
+                debugRegisters = new SP_EL2_DebugRegisters();
+                break;
+            case RegAddr.SP_EL3:
+                debugRegisters = new SP_EL3_DebugRegisters();
+                break;
+
+            case RegAddr.CURRENTEL:
+                debugRegisters = new CURRRENTEL_DebugRegisters();
+                break;
+
 
 
 
