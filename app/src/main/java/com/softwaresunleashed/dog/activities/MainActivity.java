@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(MainActivity.this);    // Show Progress Dialog
         progressDialog.setTitle("D.O.G.");                                  // Setting Title
-        progressDialog.setMessage("Preparing Register List. Please wait...");     // Setting Message
+        progressDialog.setMessage("Preparing register description list from dump file. \nPlease wait...");     // Setting Message
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);      // Progress Dialog Style Spinner
         progressDialog.show(); // Display Progress Dialog
         progressDialog.setCancelable(false);
@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-
              if(progressDialog != null)
                  progressDialog.dismiss();   // Once Populated , close the dialog.
         }
@@ -206,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
             FileInputStream inputStream = new FileInputStream(file);
 
             if (inputStream != null) {
-
                 // Clear register list before starting
                 data.clear();
 
@@ -214,8 +212,6 @@ public class MainActivity extends AppCompatActivity {
                 for (String line: lines) {
                     parse_each_line(line);
                 }
-
-
             }
             inputStream.close(); //close the file
         } catch (java.io.FileNotFoundException e) {
@@ -372,6 +368,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 data.add(registerDetailsHolder);
+                break; // Take only first value.
             } while (c.moveToNext());
         }
         //tv_description.setText(displayText);
