@@ -6,8 +6,8 @@ android {
         applicationId "com.softwaresunleashed.dog"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -35,7 +35,9 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.0.2'
     implementation 'com.android.support:cardview-v7:27.0.2'
 
-
     // File Chooser Dialog
     implementation 'com.github.adityak368:Android-FileBrowser-FilePicker:1.7'
+
+    // Help Screen Library. - ShowCaseView
+    implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
 }
