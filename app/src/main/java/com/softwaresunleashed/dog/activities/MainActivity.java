@@ -1,10 +1,11 @@
 package com.softwaresunleashed.dog.activities;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
@@ -36,6 +36,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<RegisterDetailsHolder> data;
 
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +81,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ((Button) findViewById(R.id.btnDescribeMe)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.btnOpenSampleXMLFile)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchRegisterDetailsFromAddress(et_register_val.getText().toString(), "0");
+
+                Uri selectedfile = null; //The uri with the location of the file
+                try {
+
+                    selectedfile = Uri.parse("/data/data/" + getApplicationContext().getPackageName() + "/demo_reg_file.xml");
+//                  selectedfile = Uri.parse("https://github.com/softwaresunleashed/dog/blob/master/demo_artifacts/dump_all_reg.xml"https://github.com/softwaresunleashed/dog/blob/master/demo_artifacts/dump_all_reg.xml");
+                    File fileFromUri = new File(selectedfile.getPath());
+                    Preferences.setCurrentDumpFile(getApplicationContext(), fileFromUri.getAbsolutePath());
+                    parse_dump_file(fileFromUri.getAbsolutePath());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -109,18 +123,49 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void parse_dump_file(String absolutePath) {
+    private void parse_dump_file(final String absolutePath) {
 
-        // Choose the parser depending on the file type
-        if(absolutePath.contains(".txt"))
-            parse_txt_file(absolutePath);
+        progressDialog = new ProgressDialog(MainActivity.this);    // Show Progress Dialog
+        progressDialog.setTitle("D.O.G.");                                  // Setting Title
+        progressDialog.setMessage("Preparing Register List. Please wait...");     // Setting Message
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);      // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+        progressDialog.setCancelable(false);
 
-        if(absolutePath.contains(".xml"))
-            parse_xml_file(absolutePath);
+        try{
+            ParseDumpFileTask parseDumpFileTask = new ParseDumpFileTask();
+            parseDumpFileTask.execute(absolutePath);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        // Finally populate recycler view.
-        populate_recycler_view();
+    }
 
+    private class ParseDumpFileTask extends AsyncTask<String, Void, String> {
+
+         @Override
+        protected String doInBackground(String... absolutePaths) {
+
+             String absolutePath = absolutePaths[0];
+            // Choose the parser depending on the file type
+            if(absolutePath.contains(".txt"))
+                parse_txt_file(absolutePath);
+
+            if(absolutePath.contains(".xml"))
+                parse_xml_file(absolutePath);
+
+            // Finally populate recycler view.
+            populate_recycler_view();
+
+            return absolutePath;
+         }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+             if(progressDialog != null)
+                 progressDialog.dismiss();   // Once Populated , close the dialog.
+        }
     }
 
 
@@ -373,14 +418,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void populate_recycler_view(){
-        
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_view_register_description);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
 
-        //fetch data and on ExpandableRecyclerAdapter
-        recyclerView.setAdapter(new ExpandableRecyclerAdapter(data));
+        try{
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView = (RecyclerView)findViewById(R.id.recycler_view_register_description);
+                    recyclerView.setHasFixedSize(true);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                    recyclerView.setLayoutManager(layoutManager);
+
+                    //fetch data and on ExpandableRecyclerAdapter
+                    recyclerView.setAdapter(new ExpandableRecyclerAdapter(data));
+                }
+            });
+        }catch(Exception e){
+            e.printStackTrace();}
     }
 
 }
