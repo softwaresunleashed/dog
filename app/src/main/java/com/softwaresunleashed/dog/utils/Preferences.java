@@ -11,6 +11,27 @@ public class Preferences {
     //Shared Preferences Keys
     public static final String SHARED_PREF_CURRENT_NPI_DB = "current_npi_database";
     public static final String SHARED_PREF_CURRENT_DUMP_FILE = "current_dump_file";
+    public static final String SHARED_PREF_SHOW_TIPS = "show_tip";
+
+
+    public static boolean getShowHelpAtStartup(Context context) {
+        if (context != null) {
+            SharedPreferences sp = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            return sp.getBoolean(SHARED_PREF_SHOW_TIPS, true);
+        } else {
+            return false;
+        }
+    }
+
+    public static void setShowHelpAtStartup(Context context, boolean value) {
+        if (context != null) {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+            sharedPreferencesEditor.putBoolean(SHARED_PREF_SHOW_TIPS, value);
+            sharedPreferencesEditor.apply();
+        }
+    }
+
 
 
     public static String getCurrentNPIDB(Context context) {

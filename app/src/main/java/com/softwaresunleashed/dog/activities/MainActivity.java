@@ -11,13 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aditya.filebrowser.Constants;
 import com.aditya.filebrowser.FileChooser;
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.softwaresunleashed.dog.debugregs.base_classes.RegBitField;
 import com.softwaresunleashed.dog.debugregs.implementation.Dummy_DebugRegisters;
 import com.softwaresunleashed.dog.recyclerview_regdescription.ExpandableRecyclerAdapter;
@@ -36,12 +42,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnShowcaseEventListener {
 
     private EditText et_register_val;
     private TextView tv_description;
@@ -89,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
 
                     selectedfile = Uri.parse("/data/data/" + getApplicationContext().getPackageName() + "/demo_reg_file.xml");
-//                  selectedfile = Uri.parse("https://github.com/softwaresunleashed/dog/blob/master/demo_artifacts/dump_all_reg.xml"https://github.com/softwaresunleashed/dog/blob/master/demo_artifacts/dump_all_reg.xml");
                     File fileFromUri = new File(selectedfile.getPath());
                     Preferences.setCurrentDumpFile(getApplicationContext(), fileFromUri.getAbsolutePath());
                     parse_dump_file(fileFromUri.getAbsolutePath());
@@ -109,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i2,RC_FILE_OPEN_DIALOG);
             }
         });
+
+
+        showNewFeatureTips();
 
     }
 
@@ -138,6 +144,57 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+    }
+
+    private void showNewFeatureTips() {
+        boolean showStartTalkTips = Preferences.getShowHelpAtStartup(getApplicationContext());
+        if (showStartTalkTips) {
+            try {
+                ShowcaseView showcaseView = new ShowcaseView.Builder(this)
+                        .withNewStyleShowcase()
+                        .setTarget(new ViewTarget(R.id.btnSelectNPI, this))
+                        .setContentTitle("Click to Select NPI Database ")
+                        .setStyle(R.style.CustomShowcaseTheme3)
+                        .hideOnTouchOutside()
+                        .setShowcaseEventListener(this)
+                        .build();
+                showcaseView.hideButton();
+
+
+
+                // Dont show tips at startup again
+                Preferences.setShowHelpAtStartup(getApplicationContext(), false);
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    @Override
+    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+        ShowcaseView showcaseView2 = new ShowcaseView.Builder(this)
+                .withNewStyleShowcase()
+                .setTarget(new ViewTarget(R.id.btnOpenDump, this))
+                .setContentTitle("Then click here to select the dump file to be parsed.")
+                .setStyle(R.style.CustomShowcaseTheme3)
+                .hideOnTouchOutside()
+                .build();
+        showcaseView2.hideButton();
+    }
+
+    @Override
+    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+
+    }
+
+    @Override
+    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+    }
+
+    @Override
+    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
 
     }
 
@@ -355,9 +412,13 @@ public class MainActivity extends AppCompatActivity {
                             String bitfield_name_from_db = c_desc.getString(TableDefinitions.BITFIELDS_NAME);
 
                             RegBitField regBitField = new RegBitField();
-                            String split_array[]= bit_range_from_db.split(":", 2);
-                            regBitField.start_bit = Integer.parseInt(split_array[1]);
-                            regBitField.end_bit = Integer.parseInt(split_array[0]);
+                            if(bit_range_from_db.contains(":")){
+                                String split_array[]= bit_range_from_db.split(":", 2);
+                                regBitField.start_bit = Integer.parseInt(split_array[1]);
+                                regBitField.end_bit = Integer.parseInt(split_array[0]);
+                            } else {
+                                regBitField.start_bit = regBitField.end_bit = Integer.parseInt(bit_range_from_db);
+                            }
                             regBitField.field_name = bitfield_name_from_db;
                             regBitField.field_function = bitfield_desc_from_db;
                             regBitFieldArrayList.add(regBitField);
