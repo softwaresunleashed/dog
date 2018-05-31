@@ -40,4 +40,7 @@ dependencies {
 
     // Help Screen Library. - ShowCaseView
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
+
+    // Expandable Layout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 }
