@@ -82,7 +82,8 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
 
         data = new ArrayList<RegisterDetailsHolder>();
 
-        is_npi_db_set();
+        // Display NPI selection Activity during bootup if no DB is set.
+        //is_npi_db_set();
 
         ((Button) findViewById(R.id.btnSelectNPI)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,8 +115,6 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
         });
 
 
-
-
         ((Button) findViewById(R.id.btnOpenDump)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
             }
         });
 
-
+        // Show Tips to user.
         showNewFeatureTips();
 
     }
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
                 ShowcaseView showcaseView = new ShowcaseView.Builder(this)
                         .withNewStyleShowcase()
                         .setTarget(new ViewTarget(R.id.btnSelectNPI, this))
-                        .setContentTitle("Click to Select NPI Database ")
+                        .setContentTitle("First Select NPI Database (Not needed when using CodeWarrior based dump file)")
                         .setStyle(R.style.CustomShowcaseTheme3)
                         .hideOnTouchOutside()
                         .setShowcaseEventListener(this)
