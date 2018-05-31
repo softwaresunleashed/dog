@@ -37,6 +37,8 @@ import com.softwaresunleashed.dog.debugregs.base_classes.DebugRegisters;
 import com.softwaresunleashed.dog.debugregs.base_classes.RegFacade;
 import com.softwaresunleashed.dog.debugregs.implementation.Undefined_DebugRegisters;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,7 +47,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnShowcaseEventListener {
+public class MainActivity extends AppCompatActivity implements OnShowcaseEventListener, ExpandableLayout.OnExpansionUpdateListener {
 
     private EditText et_register_val;
     private TextView tv_description;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
     private List<RegisterDetailsHolder> data;
 
     private ProgressDialog progressDialog;
+    private ExpandableLayout expandableLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
         tv_description = (TextView) findViewById(R.id.tv_description);
         et_register_val = (EditText) findViewById(R.id.et_register_val);
 
+        expandableLayout = findViewById(R.id.expandable_layout);
+        expandableLayout.setOnExpansionUpdateListener(this);
+
 
         data = new ArrayList<RegisterDetailsHolder>();
 
@@ -85,22 +91,29 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
             }
         });
 
-        ((Button) findViewById(R.id.btnOpenSampleXMLFile)).setOnClickListener(new View.OnClickListener() {
+        // Expandable Layout Click handlers
+        ((Button) findViewById(R.id.btnExpRegisterEntry)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                expandableLayout.toggle();
+            }
+        });
+        ((Button) findViewById(R.id.btnGetRegisterDescription)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String regAddress = ((EditText)findViewById(R.id.edtRegisterAddress)).getText().toString();
+                String regValue = ((EditText)findViewById(R.id.edtRegisterValue)).getText().toString();
 
-                Uri selectedfile = null; //The uri with the location of the file
-                try {
-
-                    selectedfile = Uri.parse("/data/data/" + getApplicationContext().getPackageName() + "/demo_reg_file.xml");
-                    File fileFromUri = new File(selectedfile.getPath());
-                    Preferences.setCurrentDumpFile(getApplicationContext(), fileFromUri.getAbsolutePath());
-                    parse_dump_file(fileFromUri.getAbsolutePath());
-                } catch (Exception e) {
-                    e.printStackTrace();
+                String toDisplay = fetchRegisterDetailsFromAddress(regAddress, regValue);
+                if(toDisplay != null && !toDisplay.isEmpty()){
+                    // Populate TextView Display
+                    TextView tv_regdesc = findViewById(R.id.tv_regdesc);
+                    tv_regdesc.setText(toDisplay);
                 }
             }
         });
+
+
 
 
         ((Button) findViewById(R.id.btnOpenDump)).setOnClickListener(new View.OnClickListener() {
@@ -193,6 +206,12 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
 
     @Override
     public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+    }
+
+    // Expandable Layout Listener
+    @Override
+    public void onExpansionUpdate(float expansionFraction, int state) {
 
     }
 
@@ -315,9 +334,9 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
         return lngHexVal;
     }
 
-    private void fetchRegisterDetailsFromAddress(String regAddress, String regValue){
+    private String fetchRegisterDetailsFromAddress(String regAddress, String regValue){
         if(regAddress.isEmpty())
-            return;
+            return "";
 
         if(regAddress.startsWith("0x"))
             regAddress = regAddress.substring(2);       // Skipping "0x" of the hexadecimal address
@@ -351,7 +370,8 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
 
         // Get Detail ID of the Register
         c = myDbHelper.query(DatabaseHelper.DB_TABLE_REGISTERS, null, whereClause, whereArgs, null, null, null);
-        String displayText = tv_description.getText().toString();
+        String displayText = "";
+//        String displayText = tv_description.getText().toString();
         //tv_description.setText(displayText);
         if(c.getCount() == 0){
             displayText += "Undefined / UnMapped Register Address : " + "0x" + regAddress + "\n";
@@ -378,6 +398,9 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
 
                     // Call respective register's populate description routine
                     displayText += debugRegisters.populate_description_view(regAddress, regValue);
+
+                    displayText += debugRegisters.getRegister_description();
+
                     registerDetailsHolder.setRegisterDescription(debugRegisters.populate_description_view(regAddress, regValue));
                     registerDetailsHolder.setRegisterName(debugRegisters.populate_regname_view());
 
@@ -432,6 +455,7 @@ public class MainActivity extends AppCompatActivity implements OnShowcaseEventLi
         }
         //tv_description.setText(displayText);
         myDbHelper.close();
+        return displayText;
     }
 
     private String getRegisterAddress(String regAddress) {

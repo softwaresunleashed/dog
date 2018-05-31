@@ -26,9 +26,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnOpenSampleXMLFile"
-            android:visibility="invisible"
-            android:text=" Open \nDemo XML "/>
+            android:id="@+id/btnExpRegisterEntry"
+            android:visibility="visible"
+            android:text=" Register Desc "/>
 
         <Button
             android:layout_width="match_parent"
@@ -70,6 +70,69 @@
                 android:text="2C01128" />
         </android.support.v7.widget.LinearLayoutCompat>
 
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/expandable_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:el_duration="1000"
+            app:el_expanded="true"
+            app:el_parallax="0.5"
+            android:visibility="gone">
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:text="Register Address (HEX)" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:id="@+id/edtRegisterAddress"
+                        android:text="" />
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:text="Register Value (HEX)" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:id="@+id/edtRegisterValue"
+                        android:text="" />
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/btnGetRegisterDescription"
+                    android:text="Show Description"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tv_regdesc"/>
+            </android.support.v7.widget.LinearLayoutCompat>
+        </net.cachapa.expandablelayout.ExpandableLayout>
 
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
